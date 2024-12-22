@@ -1,0 +1,19 @@
+# Step 1: Clean up previous build files
+echo "Cleaning up build files..."
+rm -rf CMakeFiles CMakeCache.txt cmake_install.cmake Makefile bond_trading_system
+
+# Step 2: Reconfigure the project with cmake
+echo "Running cmake..."
+cmake .
+
+# Step 3: Build the project
+echo "Building the project..."
+make
+
+# Step 4: Run the compiled program
+echo "Running the BondTradingSystem..."
+./bond_trading_system
+
+# Step 5: Clean up previous build files
+echo "Cleaning up build files..."
+rm -rf CMakeFiles CMakeCache.txt cmake_install.cmake Makefile bond_trading_system
