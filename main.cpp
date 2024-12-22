@@ -30,7 +30,7 @@ int main()
   productService->Add(T20);
   productService->Add(T30);
 
-
+// ------------- Inquiry -------------
 
   BondInquiryService inquiryService;
   BondInquiryServiceListener inquiryServiceListener(&inquiryService);
@@ -40,6 +40,8 @@ int main()
   BondInquirySubscriber inquirySubscriber("input/inquiries.txt", &inquiryService);
   inquiryService.Subscribe(&inquirySubscriber);
   std::cout << "Processing inquiries.txt done\n" << std::endl;
+
+// ------------- Price -------------
 
   BondPricingService pricingService;
   GUIService guiService(300);
@@ -62,6 +64,8 @@ int main()
   pricingService.Subscribe(&pricesConnector);
   std::cout << "Processing prices.txt done\n" << std::endl;
 
+// -------------- Trade -------------
+
   BondTradeBookingService tradeBookingService;
   BondPositionService positionService;
   BondRiskService riskService;
@@ -78,6 +82,13 @@ int main()
   positionService.AddListener(&positionListenerFromRisk);
   riskService.AddListener(&riskListener);
 
+  std::cout << "Processing trades.txt" << std::endl;
+  BondTradesConnector tradesSubscriber("input/trades.txt", &tradeBookingService);
+  tradeBookingService.Subscribe(&tradesSubscriber);
+  std::cout << "Processing trades.txt done\n" << std::endl;
+
+// -------------- MarketData -------------
+
   BondMarketDataService marketDataService;
   BondAlgoExecutionService algoExecutionService;
   BondExecutionService executionService;
@@ -92,11 +103,6 @@ int main()
   algoExecutionService.AddListener(&algoExecutionListener);
   executionService.AddListener(&executionListener);
   executionService.AddListener(&executionListenerFromTrade);
-
-  std::cout << "Processing trades.txt" << std::endl;
-  BondTradesConnector tradesSubscriber("input/trades.txt", &tradeBookingService);
-  tradeBookingService.Subscribe(&tradesSubscriber);
-  std::cout << "Processing trades.txt done\n" << std::endl;
 
   std::cout << "Processing marketdata.txt" << std::endl;
   BondMarketDataConnector marketdataSubscriber("input/marketdata.txt", &marketDataService);
